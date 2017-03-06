@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
 
 enum MediaControl {
     case seek
@@ -19,39 +20,12 @@ class MediaControlView:UIView {
     var beganPoint:CGPoint?
     var currentControl:MediaControl?
     var brightnessLevel = UIScreen.main.brightness
-    var volumeLevel:Float = 0.0
-    
-    // Mock
-    var avPlayer:AVPlayer?
-    var avPlayerLayer:AVPlayerLayer!
-    @IBOutlet weak var label:UILabel?
+    var volumeLevel:Float = AVAudioSession.sharedInstance().outputVolume
     
     override func awakeFromNib() {
         super.awakeFromNib()
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         self.addGestureRecognizer(gesture)
-
-        //Mock
-        label?.text = ""
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // Mock
-        if avPlayer == nil {
-            avPlayer = AVPlayer()
-            avPlayerLayer = AVPlayerLayer(player: avPlayer)
-            avPlayerLayer.frame = self.frame
-            self.layer.insertSublayer(avPlayerLayer, at: 0)
-            let item = AVPlayerItem(url: URL(string: "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8")!)
-            avPlayer?.replaceCurrentItem(with: item)
-            avPlayer?.play()
-            if let avPlayer = avPlayer {
-                volumeLevel = avPlayer.volume
-            }
-        } else {
-            avPlayerLayer.frame = self.frame
-        }
     }
     
     func handlePan(gesture:UIPanGestureRecognizer) {
@@ -81,42 +55,53 @@ class MediaControlView:UIView {
                     let diffY = (-deltaY)/self.frame.height
                     switch currentControl {
                     case .seek:
-                        label?.text = "Seek: \(deltaX/self.frame.width)"
+                        handleSeekBarLevel(delta: deltaX/self.frame.width)
                     case .brightness:
-                        handleBrightness(delta: diffY)
+                        adjustBrightness(delta: diffY)
                     case .volume:
-                        handleVolume(delta: diffY)
+                        adjustVolume(delta: diffY)
                     }
                 }
             }
         case .ended:
             currentControl = nil
             brightnessLevel = UIScreen.main.brightness
-            if let avPlayer = avPlayer {
-                volumeLevel = avPlayer.volume
-            }
-            //Mock
-            label?.text = ""
+            volumeLevel = AVAudioSession.sharedInstance().outputVolume
         default:
             break
         }
     }
 
-    func handleVolume(delta:CGFloat) {
+    func handleSeekBarLevel(delta:CGFloat) {
+        
+    }
+    
+    private func adjustVolume(delta:CGFloat) {
         var newLevel = volumeLevel + Float(delta)
         newLevel = max(0.0, newLevel)
         newLevel = min(1.0, newLevel)
-        avPlayer?.volume = newLevel
-        //Mock
-        label?.text = "Volume: \(newLevel*100.0)"
+        let volumeView = MPVolumeView()
+        for view in volumeView.subviews {
+            if let slider = view as? UISlider {
+                slider.value = newLevel
+                handleVolume(newLevel: newLevel)
+                break
+            }
+        }
+
+    }
+    func handleVolume(newLevel:Float) {
+ 
     }
     
-    func handleBrightness(delta:CGFloat) {
+    private func adjustBrightness(delta:CGFloat) {
         var newLevel = brightnessLevel + delta
         newLevel = max(0.0, newLevel)
         newLevel = min(1.0, newLevel)
         UIScreen.main.brightness = newLevel
-        //Mock
-        label?.text = "Brightness: \(newLevel*100.0)"
+        handleBrightness(newLevel: Float(newLevel))
+    }
+    func handleBrightness(newLevel:Float) {
+
     }
 }

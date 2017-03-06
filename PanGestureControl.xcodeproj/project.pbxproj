@@ -13,6 +13,7 @@
 		2F111F7B1E6BC3AC00983DA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F111F7A1E6BC3AC00983DA3 /* Assets.xcassets */; };
 		2F111F7E1E6BC3AC00983DA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F111F7C1E6BC3AC00983DA3 /* LaunchScreen.storyboard */; };
 		2F111F861E6BEB2B00983DA3 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F111F851E6BEB2B00983DA3 /* MediaControlView.swift */; };
+		9C79931F1E6D6EC100F16899 /* MockMediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79931E1E6D6EC100F16899 /* MockMediaControlView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		2F111F7D1E6BC3AC00983DA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F111F7F1E6BC3AC00983DA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F111F851E6BEB2B00983DA3 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
+		9C79931E1E6D6EC100F16899 /* MockMediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMediaControlView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				2F111F7C1E6BC3AC00983DA3 /* LaunchScreen.storyboard */,
 				2F111F7F1E6BC3AC00983DA3 /* Info.plist */,
 				2F111F851E6BEB2B00983DA3 /* MediaControlView.swift */,
+				9C79931E1E6D6EC100F16899 /* MockMediaControlView.swift */,
 			);
 			path = PanGestureControl;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 				2F111F761E6BC3AC00983DA3 /* ViewController.swift in Sources */,
 				2F111F861E6BEB2B00983DA3 /* MediaControlView.swift in Sources */,
 				2F111F741E6BC3AC00983DA3 /* AppDelegate.swift in Sources */,
+				9C79931F1E6D6EC100F16899 /* MockMediaControlView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +308,7 @@
 				2F111F841E6BC3AC00983DA3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

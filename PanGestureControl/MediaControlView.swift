@@ -21,6 +21,7 @@ class MediaControlView:UIView {
     var currentControl:MediaControl?
     var brightnessLevel = UIScreen.main.brightness
     var volumeLevel:Float = AVAudioSession.sharedInstance().outputVolume
+    var isGestureActive = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +30,9 @@ class MediaControlView:UIView {
     }
     
     func handlePan(gesture:UIPanGestureRecognizer) {
+        if !isGestureActive {
+            return
+        }
         switch gesture.state {
         case .began:
             beganPoint = gesture.location(in: self)

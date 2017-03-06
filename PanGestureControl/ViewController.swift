@@ -20,6 +20,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBOutlet weak var controlView: MockMediaControlView!
 
+    @IBAction func enableGesture(_ sender: Any) {
+        controlView.isGestureActive = !controlView.isGestureActive
+    }
 }
 

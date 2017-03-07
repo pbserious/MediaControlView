@@ -68,6 +68,9 @@ class MediaControlView:UIView {
                 }
             }
         case .ended:
+            if let control = currentControl {
+                handleEndGesture(control: control)
+            }
             currentControl = nil
             brightnessLevel = UIScreen.main.brightness
             volumeLevel = AVAudioSession.sharedInstance().outputVolume
@@ -75,7 +78,7 @@ class MediaControlView:UIView {
             break
         }
     }
-
+    
     func handleSeekBarLevel(delta:CGFloat) {
         
     }
@@ -92,10 +95,10 @@ class MediaControlView:UIView {
                 break
             }
         }
-
+        
     }
     func handleVolume(newLevel:Float) {
- 
+        
     }
     
     private func adjustBrightness(delta:CGFloat) {
@@ -106,6 +109,10 @@ class MediaControlView:UIView {
         handleBrightness(newLevel: Float(newLevel))
     }
     func handleBrightness(newLevel:Float) {
-
+        
+    }
+    
+    func handleEndGesture(control:MediaControl) {
+        
     }
 }

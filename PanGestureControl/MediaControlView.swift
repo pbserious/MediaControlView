@@ -16,12 +16,18 @@ enum MediaControl {
     case brightness
 }
 
+enum SeekDirection {
+    case left
+    case right
+}
+
 class MediaControlView:UIView {
     var beganPoint:CGPoint?
     var currentControl:MediaControl?
     var brightnessLevel = UIScreen.main.brightness
     var volumeLevel:Float = AVAudioSession.sharedInstance().outputVolume
     var isGestureActive = false
+    private var lastSeekPoint:CGPoint?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +42,7 @@ class MediaControlView:UIView {
         switch gesture.state {
         case .began:
             beganPoint = gesture.location(in: self)
+            lastSeekPoint = beganPoint
         case .changed:
             guard let beganPoint = beganPoint else {
                 return
@@ -59,7 +66,10 @@ class MediaControlView:UIView {
                     let diffY = (-deltaY)/self.frame.height
                     switch currentControl {
                     case .seek:
-                        handleSeekBarLevel(delta: deltaX/self.frame.width)
+                        if let lastSeekPoint = lastSeekPoint {
+                            let direction:SeekDirection = currentPoint.x - lastSeekPoint.x > 0 ? .right : .left
+                            handleSeekBarLevel(delta: deltaX/self.frame.width, direction: direction)
+                        }
                     case .brightness:
                         adjustBrightness(delta: diffY)
                     case .volume:
@@ -79,7 +89,7 @@ class MediaControlView:UIView {
         }
     }
     
-    func handleSeekBarLevel(delta:CGFloat) {
+    func handleSeekBarLevel(delta:CGFloat,direction:SeekDirection) {
         
     }
     

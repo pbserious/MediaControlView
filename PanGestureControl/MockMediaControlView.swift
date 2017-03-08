@@ -41,7 +41,7 @@ class MockMediaControlView:MediaControlView {
         }
     }
 
-    override func handleSeekBarLevel(delta:CGFloat) {
+    override func handleSeekBarLevel(delta: CGFloat, direction: SeekDirection) {
         label?.text = "Seek: \(delta)"
     }
 

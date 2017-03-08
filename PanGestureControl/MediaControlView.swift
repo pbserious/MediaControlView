@@ -28,6 +28,7 @@ class MediaControlView:UIView {
     var volumeLevel:Float = AVAudioSession.sharedInstance().outputVolume
     var isGestureActive = false
     private var lastSeekPoint:CGPoint?
+    private var lastDirection:SeekDirection?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -67,7 +68,12 @@ class MediaControlView:UIView {
                     switch currentControl {
                     case .seek:
                         if let lastSeekPoint = lastSeekPoint {
-                            let direction:SeekDirection = currentPoint.x - lastSeekPoint.x > 0 ? .right : .left
+                            var direction:SeekDirection = currentPoint.x - lastSeekPoint.x > 0 ? .right : .left
+                            if let lastDirection = lastDirection {
+                                if currentPoint.x == lastSeekPoint.x {
+                                    direction = lastDirection
+                                }
+                            }
                             handleSeekBarLevel(delta: deltaX/self.frame.width, direction: direction)
                             self.lastSeekPoint = currentPoint
                         }

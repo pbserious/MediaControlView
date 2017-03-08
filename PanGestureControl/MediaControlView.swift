@@ -69,6 +69,7 @@ class MediaControlView:UIView {
                         if let lastSeekPoint = lastSeekPoint {
                             let direction:SeekDirection = currentPoint.x - lastSeekPoint.x > 0 ? .right : .left
                             handleSeekBarLevel(delta: deltaX/self.frame.width, direction: direction)
+                            self.lastSeekPoint = currentPoint
                         }
                     case .brightness:
                         adjustBrightness(delta: diffY)
@@ -82,6 +83,7 @@ class MediaControlView:UIView {
                 handleEndGesture(control: control)
             }
             currentControl = nil
+            lastSeekPoint = nil
             brightnessLevel = UIScreen.main.brightness
             volumeLevel = AVAudioSession.sharedInstance().outputVolume
         default:
